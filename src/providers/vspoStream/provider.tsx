@@ -48,7 +48,7 @@ const parseToStreamer = (
 export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
   const [streamResponses, setStreamsResponse] = useState<StreamResponse[]>([]);
   const [streamerMap, setStreamerMap] = useState<StreamerMap>({});
-  const { filteredStreamerIds } = useSettings();
+  const { filteredStreamerIds, filteredTitle } = useSettings();
 
   useEffect(() => {
     const useMockData = import.meta.env.VITE_USE_MOCK_DATA === "true";
@@ -132,9 +132,17 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
         return results;
       }
 
+      // filter by title
+      if (
+        filteredTitle.trim() !== "" &&
+        !streamRes.title.toLowerCase().includes(filteredTitle.toLowerCase())
+      ) {
+        return results;
+      }
+
       return results.concat(parseToStream(streamRes, channel));
     }, []);
-  }, [streamResponses, streamerMap, filteredStreamerIds]);
+  }, [streamResponses, streamerMap, filteredStreamerIds, filteredTitle]);
 
   const streamers = useMemo<Streamer[]>(
     () => Object.values(streamerMap),
