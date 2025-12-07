@@ -116,6 +116,8 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const streams = useMemo<Stream[]>(() => {
+    const titleFilterLower = filteredTitle.trim().toLowerCase();
+    
     return streamResponses.reduce((results: Stream[], streamRes) => {
       const channel = streamerMap[streamRes.streamerId][streamRes.platform];
 
@@ -134,8 +136,8 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
 
       // filter by title
       if (
-        filteredTitle.trim() !== "" &&
-        !streamRes.title.toLowerCase().includes(filteredTitle.toLowerCase())
+        titleFilterLower !== "" &&
+        !streamRes.title.toLowerCase().includes(titleFilterLower)
       ) {
         return results;
       }
