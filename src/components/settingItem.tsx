@@ -9,7 +9,6 @@ import {
   SelectValue,
   SelectItem as _SelectItem,
 } from "./ui/select";
-import { Input } from "./ui/input";
 
 type ItemBase = {
   label: string;
@@ -124,17 +123,4 @@ function EntryItem({
   );
 }
 
-function InputItem({
-  label,
-  description,
-  className,
-  ...props
-}: ItemBase & Omit<ComponentProps<typeof Input>, "className">) {
-  return (
-    <Item label={label} description={description} className={className}>
-      <Input {...props} className="w-48" />
-    </Item>
-  );
-}
-
-export { Label, Description, Header, Item, SelectItem, SwitchItem, EntryItem, InputItem };
+export { Label, Description, Header, Item, SelectItem, SwitchItem, EntryItem };

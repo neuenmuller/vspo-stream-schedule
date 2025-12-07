@@ -12,6 +12,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { firestore } from "@/firebase";
 import { vspoStreamContext, vspoStreamerContext } from "./context";
 import { useSettings } from "../setting";
+import { mockStreamers, mockStreams } from "@/mocks";
 
 const parseToStream = (streamRes: StreamResponse, channel: Channel): Stream => {
   const endAt = streamRes.endTime ? new Date(streamRes.endTime) : undefined;
@@ -47,9 +48,27 @@ const parseToStreamer = (
 export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
   const [streamResponses, setStreamsResponse] = useState<StreamResponse[]>([]);
   const [streamerMap, setStreamerMap] = useState<StreamerMap>({});
-  const { filteredStreamerIds, filteredTitle } = useSettings();
+  const { filteredStreamerIds } = useSettings();
 
   useEffect(() => {
+    const useMockData = import.meta.env.VITE_USE_MOCK_DATA === "true";
+
+    if (useMockData) {
+      // Use mock data for local development
+      console.log("Using mock data for local development");
+      setStreamsResponse(mockStreams);
+      
+      const map = Object.fromEntries(
+        Object.entries(mockStreamers).map(([id, data]) => [
+          id,
+          parseToStreamer(id, data),
+        ])
+      );
+      setStreamerMap(map);
+      return;
+    }
+
+    // Use Firebase for production
     const streamCollectionName = import.meta.env.VITE_STREAM_COLLECTION_NAME;
     const streamerCollectionName = import.meta.env
       .VITE_STREAMER_COLLECTION_NAME;
@@ -97,8 +116,6 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const streams = useMemo<Stream[]>(() => {
-    const titleFilterLower = filteredTitle.trim().toLowerCase();
-    
     return streamResponses.reduce((results: Stream[], streamRes) => {
       const channel = streamerMap[streamRes.streamerId][streamRes.platform];
 
@@ -115,17 +132,9 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
         return results;
       }
 
-      // filter by title
-      if (
-        titleFilterLower !== "" &&
-        !streamRes.title.toLowerCase().includes(titleFilterLower)
-      ) {
-        return results;
-      }
-
       return results.concat(parseToStream(streamRes, channel));
     }, []);
-  }, [streamResponses, streamerMap, filteredStreamerIds, filteredTitle]);
+  }, [streamResponses, streamerMap, filteredStreamerIds]);
 
   const streamers = useMemo<Streamer[]>(
     () => Object.values(streamerMap),
