@@ -42,9 +42,9 @@ export function Header() {
         placeholder="Filter by stream title..."
         value={titleFilter.value}
         onChange={(e) => titleFilter.onChange(e.target.value)}
-        className="max-w-xs ml-2 hidden md:block"
+        className="max-w-xs ml-auto mr-2 hidden md:block"
       />
-      <div className="ml-auto flex gap-2">
+      <div className="flex gap-2">
         {isDesktop && (
           <div>
             <ToggleButton {...themeState} className="rounded-none rounded-l-md">
