@@ -6,20 +6,10 @@ const useMockData = import.meta.env.VITE_USE_MOCK_DATA === "true";
 let firestore: Firestore;
 
 if (useMockData) {
-  // Create a dummy firestore instance for mock mode
-  // This prevents errors when Firebase config is not available
+  // In mock mode, firestore is not used as VspoStreamProvider returns early
+  // We export a placeholder to satisfy the import, but it will never be called
   console.log("Firebase: Using mock data mode - Firebase initialization skipped");
-  const dummyConfig = {
-    apiKey: "mock-api-key",
-    authDomain: "mock.firebaseapp.com",
-    projectId: "mock-project",
-    storageBucket: "mock.appspot.com",
-    messagingSenderId: "000000000000",
-    databaseURL: "https://mock.firebaseio.com",
-    appId: "1:000000000000:web:0000000000000000000000",
-  };
-  const app = initializeApp(dummyConfig);
-  firestore = getFirestore(app);
+  firestore = {} as Firestore;
 } else {
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,

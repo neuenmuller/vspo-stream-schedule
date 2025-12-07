@@ -65,10 +65,7 @@ export const VspoStreamProvider = ({ children }: { children: ReactNode }) => {
         ])
       );
       setStreamerMap(map);
-      
-      return () => {
-        // No cleanup needed for mock data
-      };
+      return;
     }
 
     // Use Firebase for production
