@@ -13,5 +13,11 @@
 * **配信中**または**配信予定**の配信のみが本サイトで一覧できます。
 * 10分に1回配信情報を更新しています。
 
+## 開発者向け / For Developers
+
+ローカル開発環境のセットアップ方法については[LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md)を参照してください。
+
+For local development setup instructions, please refer to [LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md).
+
 ## バグ・要望
 * [GitHub issues](https://github.com/mnsinri/vspo-stream-schedule/issues)

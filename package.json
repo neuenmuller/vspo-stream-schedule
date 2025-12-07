@@ -5,9 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:emulator": "firebase emulators:start --only firestore,hosting",
+    "dev:full": "npm run dev:emulator",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "emulator:seed": "node scripts/seed-emulator.js",
+    "emulator:export": "firebase emulators:export ./emulator-data",
+    "emulator:import": "firebase emulators:start --import=./emulator-data --export-on-exit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -46,6 +51,7 @@
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "firebase-tools": "^14.27.0",
     "globals": "^16.0.0",
     "i": "^0.3.7",
     "npm": "^11.3.0",

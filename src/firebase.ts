@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -13,3 +13,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
+
+// Connect to Firebase Emulator in development mode
+if (import.meta.env.VITE_USE_EMULATOR === "true") {
+  connectFirestoreEmulator(firestore, "localhost", 8080);
+  console.log("Connected to Firestore Emulator");
+}
