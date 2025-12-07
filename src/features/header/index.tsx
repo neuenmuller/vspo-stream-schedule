@@ -5,6 +5,8 @@ import { TiFilter } from "react-icons/ti";
 import { TbTextDirectionRtl } from "react-icons/tb";
 import { IoLogoGithub } from "react-icons/io";
 import { BiMenu } from "react-icons/bi";
+import { IoSearch } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import { ToggleButton } from "@/components/toggleButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,14 +39,29 @@ export function Header() {
       <div className="font-[Itim] text-2xl tracking-tighter text-primary hidden sm:block">
         Vspo stream schedule
       </div>
-      <Input
-        type="text"
-        placeholder="Filter by stream title..."
-        value={titleFilter.value}
-        onChange={(e) => titleFilter.onChange(e.target.value)}
-        className="max-w-xs ml-2 hidden md:block"
-      />
       <div className="ml-auto flex gap-2">
+        <div className="relative hidden md:flex items-center">
+          <IoSearch className="absolute left-3 size-4 text-muted-foreground pointer-events-none" />
+          <Input
+            type="text"
+            placeholder="Filter by title..."
+            value={titleFilter.value}
+            onChange={(e) => titleFilter.onChange(e.target.value)}
+            className="pl-9 pr-9 w-64"
+          />
+          {titleFilter.value && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => titleFilter.onChange("")}
+              className="absolute right-0 h-9 w-9 hover:bg-transparent"
+            >
+              <IoClose className="size-4 text-muted-foreground hover:text-foreground" />
+            </Button>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-2">
         {isDesktop && (
           <div>
             <ToggleButton {...themeState} className="rounded-none rounded-l-md">
