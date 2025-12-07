@@ -47,7 +47,7 @@ export function Header() {
             placeholder="Filter by title..."
             value={titleFilter.value}
             onChange={(e) => titleFilter.onChange(e.target.value)}
-            className="pl-9 pr-9 w-64 focus-visible:ring-vspo-primary"
+            className="pl-9 pr-9 w-64 shadow-xs focus-visible:ring-vspo-primary"
           />
           {titleFilter.value && (
             <Button
