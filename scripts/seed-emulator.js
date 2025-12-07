@@ -22,7 +22,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Connect to emulator
-connectFirestoreEmulator(db, "localhost", 8080);
+try {
+  connectFirestoreEmulator(db, "localhost", 8080);
+} catch (error) {
+  console.error("❌ Failed to connect to Firestore Emulator.");
+  console.error("Make sure the emulator is running: npm run dev:emulator");
+  process.exit(1);
+}
 
 // Sample data
 const sampleStreamers = [

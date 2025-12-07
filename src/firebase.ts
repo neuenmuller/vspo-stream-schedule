@@ -16,6 +16,16 @@ export const firestore = getFirestore(app);
 
 // Connect to Firebase Emulator in development mode
 if (import.meta.env.VITE_USE_EMULATOR === "true") {
-  connectFirestoreEmulator(firestore, "localhost", 8080);
-  console.log("Connected to Firestore Emulator");
+  try {
+    connectFirestoreEmulator(firestore, "localhost", 8080);
+    console.log("Connected to Firestore Emulator");
+  } catch (error) {
+    // Ignore error if already connected (happens with hot module replacement)
+    if (
+      error instanceof Error &&
+      !error.message.includes("already been called")
+    ) {
+      throw error;
+    }
+  }
 }
