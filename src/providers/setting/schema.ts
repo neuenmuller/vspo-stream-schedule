@@ -5,7 +5,6 @@ export const SettingSchema = z.object({
   isMarqueeTitle: z.boolean().default(false),
   isDisplayHistory: z.boolean().default(false),
   filteredStreamerIds: z.array(z.string()).default([]),
-  filteredTitle: z.string().default(""),
 });
 
 export type Setting = z.infer<typeof SettingSchema>;
@@ -27,6 +26,6 @@ type ClearAction<K extends keyof Setting> = {
 };
 
 export type SettingAction =
-  | Action<"theme" | "isMarqueeTitle" | "isDisplayHistory" | "filteredTitle">
+  | Action<"theme" | "isMarqueeTitle" | "isDisplayHistory">
   | FilterAction<"filteredStreamerIds">
   | ClearAction<"filteredStreamerIds">;
